@@ -147,6 +147,23 @@ instance Semigroup BoolDisj where
 instance Monoid BoolDisj where
   mempty = BoolDisj False
 
+-- Or
+data Or a b
+  = Fst a
+  | Snd b
+  deriving (Eq, Show)
+
+instance (Arbitrary a, Arbitrary b) => Arbitrary (Or a b) where
+  arbitrary = do
+    a <- arbitrary
+    b <- arbitrary
+    oneof [return $ Fst a, return $ Snd b]
+
+instance Semigroup (Or a b) where
+  Snd a <> _ = Snd a
+  _ <> Snd b = Snd b
+  _ <> a = a
+
 spec :: SpecWith ()
 spec = do
   describe "Trivial" $ do
@@ -204,3 +221,10 @@ spec = do
       BoolDisj False <> BoolDisj True `shouldBe` BoolDisj True
     it "for False/False" $
       BoolDisj False <> BoolDisj False `shouldBe` BoolDisj False
+  describe "Or" $ do
+    it "obeys associativity" $
+      property (semigroupAssoc :: Or S S -> Or S S -> Or S S -> B)
+    it "Fst/Snd" $ Fst 1 <> Snd 2 `shouldBe` (Snd 2 :: Or Int Int)
+    it "Fst/Fst" $ Fst 1 <> Fst 2 `shouldBe` (Fst 2 :: Or Int Int)
+    it "Fst/Snd" $ Snd 1 <> Fst 2 `shouldBe` (Snd 1 :: Or Int Int)
+    it "Fst/Snd" $ Snd 1 <> Snd 2 `shouldBe` (Snd 1 :: Or Int Int)
