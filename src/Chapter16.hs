@@ -47,7 +47,7 @@ instance (Arbitrary a) => Arbitrary (WhoCares a) where
 
 instance Functor WhoCares where
   fmap _ ItDoesnt = ItDoesnt
-  fmap _ WhatThisIsCalled = ItDoesnt
+  fmap _ WhatThisIsCalled = WhatThisIsCalled
   fmap f (Matter a) = Matter (f a)
 
 -- 16.10 Incances of Func

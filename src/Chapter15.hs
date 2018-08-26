@@ -1,5 +1,6 @@
 module Chapter15 where
 
+import Data.Functor
 import Data.Monoid
 import Test.Hspec
 import Test.QuickCheck hiding (Failure, Success)
@@ -65,6 +66,10 @@ instance (Semigroup a, Semigroup b) => Semigroup (Two a b) where
 
 instance (Monoid a, Monoid b) => Monoid (Two a b) where
   mempty = Two mempty mempty
+
+data One a =
+  One a
+  deriving (Eq, Show)
 
 -- Three
 data Three a b c =

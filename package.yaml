@@ -21,7 +21,10 @@ description:         Please see the README on GitHub at <https://github.com/kyle
 
 dependencies:
 - base >= 4.7 && < 5
+- checkers
+- containers
 - hspec
+- hspec-checkers
 - QuickCheck
 
 library:
@@ -36,9 +39,18 @@ executables:
     - -rtsopts
     - -with-rtsopts=-N
     dependencies:
+    - QuickCheck
+    - checkers
+    - containers
+    - criterion
+    - haskell-book
     - haskell-book
     - hspec
-
+    - hspec-checkers
+    - random
+    - text
+    - time
+    - transformers
 
 tests:
   haskell-book-test:
@@ -51,6 +63,14 @@ tests:
     - -rtsopts
     - -with-rtsopts=-N
     dependencies:
+    - QuickCheck
+    - checkers
+    - containers
+    - criterion
     - haskell-book
     - hspec
-    - QuickCheck
+    - hspec-checkers
+    - random
+    - text
+    - time
+    - transformers
