@@ -239,9 +239,9 @@ instance Monoid a => Applicative (Four' a) where
 
 spec :: SpecWith ()
 spec = do
-  describe "Identity" $ do
+  describe "Identity" $
     testBatch $ applicative (undefined :: Identity (Int, Int, Int))
-  describe "Constant" $ do
+  describe "Constant" $
     testBatch $ applicative (undefined :: Constant S (Int, Int, Int))
   describe "Pair" $ do
     testBatch $ functor (undefined :: Pair (Int, Int, Int))
